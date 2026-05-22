@@ -1181,4 +1181,5 @@ Large payloads (> 32 KB) are routed directly to `provider="g"` (Gemini 1M-token 
 
 ## YouTube demo
 
-*(Add YouTube link here)*
+https://www.youtube.com/watch?v=b0QvnfZVDiA
+
