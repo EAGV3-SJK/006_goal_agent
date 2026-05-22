@@ -1,13 +1,13 @@
 
 
 ########################################################################
-# RUN — 2026-05-22 21:10:44 UTC
+# RUN — 2026-05-22 23:10:21 UTC
 # Query: When is mom's birthday?
 ########################################################################
 
 
 ════════════════════════════════════════════════════════════════════════
-## PERCEPTION — 2026-05-22 21:10:48 UTC
+## PERCEPTION — 2026-05-22 23:10:25 UTC
 ════════════════════════════════════════════════════════════════════════
 
 ### System Prompt (rendered)
@@ -66,7 +66,7 @@ User: "Search for 'Python asyncio best practices', read the top 3 results, and g
   entities=["Python", "asyncio"], memory_relevant=false.
 
 # Stored facts (current contents of the agent's notebook):
-- moms_birthday: {"date": "15 May 2026", "reminders": ["two weeks before", "on the day"]}
+- moms_birthday: {"date": "15 May 2026"}
 
 ```
 
@@ -91,7 +91,7 @@ When is mom's birthday?
 
 
 ────────────────────────────────────────────────────────────────────────
-## DECISION — Iteration 1 of 10 — 2026-05-22 21:10:53 UTC
+## DECISION — Iteration 1 of 10 — 2026-05-22 23:10:29 UTC
 ────────────────────────────────────────────────────────────────────────
 
 ### System Prompt (rendered)
@@ -155,13 +155,22 @@ get_time
   results, or canonical well-known URLs (Wikipedia, pypi.org, etc.).
 - Prefer authoritative sources: Wikipedia for biography, official docs for
   libraries, NVD/GitHub Security Advisories for CVEs.
-- For synthesis queries requiring multiple sources, fetch each source in
-  separate iterations before synthesizing.
+- SYNTHESIS WORKFLOW — when query_type="synthesis":
+    Step 1  Call web_search ONCE. You now have a list of URLs.
+    Step 2  Call fetch_url on each URL from Step 1, ONE per iteration.
+            Count successful fetch_url entries in the scratchpad. If
+            pages_read requires ≥3 entries and you have fewer than 3
+            successful fetch_url calls, pick the next unvisited URL from
+            Step 1's results and call fetch_url on it NOW.
+            DO NOT call web_search again — you already have the URLs.
+    Step 3  After ≥3 successful fetch_url calls, emit FINAL_ANSWER.
+- DUPLICATE-CALL GUARD — BEFORE choosing CALL_TOOL, read the scratchpad.
+  If a ⚠ DUPLICATE warning appears for a call, or if an identical
+  tool + args already has an "OK" entry, DO NOT repeat that call.
+  Choose fetch_url on an unvisited URL, or FINAL_ANSWER instead.
 - READ THE SCRATCHPAD. If a previous iteration shows your CALL_TOOL failed
   (ERR), look at the error and FIX what you missed — empty tool_args is the
   most common bug; fill in `query` or `url`.
-- Never repeat the exact same search query that already returned results.
-  Refine the terms if the previous results were not useful.
 - GROUNDING: Every field in your FINAL_ANSWER.answer (dates, names, URLs, lists)
   MUST appear verbatim somewhere in a prior iteration's `result:` excerpt in the
   scratchpad. If a value you need is NOT visible in the scratchpad, CALL_TOOL to
@@ -199,7 +208,7 @@ Schema:
 }
 
 # Stored facts (durable notebook)
-- moms_birthday: {"date": "15 May 2026", "reminders": ["two weeks before", "on the day"]}
+- moms_birthday: {"date": "15 May 2026"}
 
 # Perception summary
 intent:       The user wants to know the date of their mother's birthday.
@@ -370,14 +379,7 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
 ### Raw LLM Response
 
 ```json
-{
-  "action": "FINAL_ANSWER",
-  "reasoning": "The stored facts already contain the requested information, eliminating the need for tool calls.",
-  "answer": {
-    "birthday": "15 May 2026",
-    "note": "Mom's birthday is a date to remember."
-  }
-}
+{"action": "FINAL_ANSWER", "reasoning": "The query type is memory_recall, and the stored facts provide all necessary information for the answer schema.", "answer": {"birthday": "15 May 2026", "note": "Recalled from durable memory."}}
 ```
 
 ### Validated Decision (`FINAL_ANSWER`)
@@ -385,10 +387,10 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
 ```json
 {
   "action": "FINAL_ANSWER",
-  "reasoning": "The stored facts already contain the requested information, eliminating the need for tool calls.",
+  "reasoning": "The query type is memory_recall, and the stored facts provide all necessary information for the answer schema.",
   "answer": {
     "birthday": "15 May 2026",
-    "note": "Mom's birthday is a date to remember."
+    "note": "Recalled from durable memory."
   }
 }
 ```
@@ -398,6 +400,6 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
 ```json
 {
   "birthday": "15 May 2026",
-  "note": "Mom's birthday is a date to remember."
+  "note": "Recalled from durable memory."
 }
 ```

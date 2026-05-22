@@ -16,6 +16,7 @@ dependencies = [
     "tavily-python",
     "aiohttp>=3.9.5,<3.10",
     "truststore>=0.10",
+    "tzdata",
 ]
 
 [build-system]

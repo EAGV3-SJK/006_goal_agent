@@ -70,6 +70,24 @@ TRACE_RESULT_CHARS = 400
 #  Rendering helpers
 # ════════════════════════════════════════════════════════════════════════════
 
+def _next_unvisited_url(
+    scratchpad: list[ScratchpadEntry],
+    successful_calls: set[str],
+) -> str | None:
+    """Return the first URL from a prior web_search result that hasn't been fetched yet."""
+    import re
+    for entry in scratchpad:
+        if (
+            entry.decision_action == "CALL_TOOL"
+            and entry.result_success
+            and "web_search" in entry.decision_summary
+        ):
+            for url in re.findall(r'"url":\s*"(https?://[^"]+)"', entry.result_excerpt):
+                if f"fetch_url::{url}" not in successful_calls:
+                    return url
+    return None
+
+
 def _call_dedup_key(decision: DecisionOutput) -> str | None:
     """Return a dedup key for CALL_TOOL decisions; None for other actions.
     Uses only the semantically meaningful arg so that e.g. max_results
@@ -221,12 +239,18 @@ async def run_agent(query: str, max_iters: int = DEFAULT_MAX_ITERS) -> int:
             if dup_key and dup_key in successful_calls:
                 tool_name = decision.tool_name if isinstance(decision, CallToolDecision) else "?"
                 key_arg = "query" if tool_name == "web_search" else "url"
-                # Next unvisited URL hint for synthesis loops
                 if tool_name == "web_search":
-                    next_hint = (
-                        "Call fetch_url on the next unvisited URL from the "
-                        "web_search results already in the scratchpad."
-                    )
+                    next_url = _next_unvisited_url(state.scratchpad, successful_calls)
+                    if next_url:
+                        next_hint = (
+                            f"Call fetch_url on '{next_url}' next "
+                            f"(it is in your search results but not yet fetched)."
+                        )
+                    else:
+                        next_hint = (
+                            "All search-result URLs have been fetched. "
+                            "Emit FINAL_ANSWER now."
+                        )
                 else:
                     next_hint = (
                         "If the scratchpad contains enough data to fill every "

@@ -195,20 +195,20 @@ async def _httpx_fetch(url: str, timeout: int) -> dict:
 
 
 async def _crawl4ai_fetch(url: str) -> dict:
-    import io
-    import rich.console as _rc
     from crawl4ai import AsyncWebCrawler  # pyright: ignore [reportMissingImports]
-    from crawl4ai.async_logger import AsyncLogger  # pyright: ignore [reportMissingImports]
 
-    # On Windows, Rich's logger uses LegacyWindowsTerm (Win32 console API) which
-    # bypasses fd-level redirects and crashes on non-ASCII characters over the
-    # cp1252 MCP stdio stream.  Fix: give crawl4ai a silent logger whose Rich
-    # Console writes to an in-memory StringIO — no Win32 API, no encoding issues.
-    silent = AsyncLogger(verbose=False)
-    silent.console = _rc.Console(file=io.StringIO(), quiet=True)
-
-    async with AsyncWebCrawler(logger=silent) as crawler:
-        r = await crawler.arun(url=url)
+    # crawl4ai uses Rich which writes via its own captured stdout reference, so
+    # contextlib.redirect_stdout doesn't catch it. Redirect at the file-descriptor
+    # level — crawl4ai's banner / [FETCH] / [SCRAPE] markers would otherwise
+    # corrupt the MCP stdio JSON-RPC stream.
+    saved_fd = os.dup(1)
+    os.dup2(2, 1)
+    try:
+        async with AsyncWebCrawler(verbose=False) as crawler:
+            r = await crawler.arun(url=url)
+    finally:
+        os.dup2(saved_fd, 1)
+        os.close(saved_fd)
 
     # r.markdown is a str subclass (StringCompatibleMarkdown) that Pydantic
     # serializes as {} because its real field is private. Pull the raw string
