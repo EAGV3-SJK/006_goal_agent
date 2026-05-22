@@ -346,7 +346,6 @@ Converged in 1 iteration(s).
 
 ### System Prompt (rendered)
 
-```
 You are the PERCEPTION layer of a four-role cognitive agent.
 
 Your job: read the user's query ONCE and return a structured analysis that
@@ -402,17 +401,14 @@ User: "Search for 'Python asyncio best practices', read the top 3 results, and g
 # Stored facts (current contents of the agent's notebook):
 - moms_birthday: {"date": "15 May 2026"}
 
-```
 
 ### User Query
 
-```
 Search for 'Python asyncio best practices', read the top 3 results, and give me a short numbered list of the advice they agree on.
-```
 
 ### Parsed PerceptionOutput
 
-```json
+json
 {
   "user_query": "Search for 'Python asyncio best practices', read the top 3 results, and give me a short numbered list of the advice they agree on.",
   "intent": "The user wants to research Python asyncio best practices from multiple sources and summarize common advice.",
@@ -424,7 +420,7 @@ Search for 'Python asyncio best practices', read the top 3 results, and give me 
   "expected_answer_schema": "AsyncioBestPractices",
   "memory_relevant": false
 }
-```
+
 
 
 ────────────────────────────────────────────────────────────────────────
@@ -433,7 +429,7 @@ Search for 'Python asyncio best practices', read the top 3 results, and give me 
 
 ### System Prompt (rendered)
 
-```
+
 You are the DECISION layer of a four-role cognitive agent. On every iteration
 you choose EXACTLY ONE of three actions:
 
@@ -584,11 +580,10 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
 # Scratchpad — what you tried this run (oldest first)
 (empty — this is iteration 1)
 
-```
 
 ### Per-Query JSON Schema sent to LLM (RawDecision_AsyncioBestPractices)
 
-```json
+json
 {
   "$defs": {
     "AsyncioBestPractices": {
@@ -745,17 +740,15 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
   "title": "RawDecision_AsyncioBestPractices",
   "type": "object"
 }
-```
 
 ### Raw LLM Response
 
-```json
+json
 {"action": "CALL_TOOL", "reasoning": "The query requires synthesizing information from multiple sources, so I must start by searching for authoritative URLs.", "tool_name": "web_search", "tool_args": {"query": "Python asyncio best practices", "max_results": 5}}
-```
 
 ### Validated Decision (`CALL_TOOL`)
 
-```json
+json
 {
   "action": "CALL_TOOL",
   "reasoning": "The query requires synthesizing information from multiple sources, so I must start by searching for authoritative URLs.",
@@ -765,7 +758,6 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
     "max_results": 5
   }
 }
-```
 
 ### Final-Answer Validation (AsyncioBestPractices)
 
@@ -778,7 +770,6 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
 
 ### System Prompt (rendered)
 
-```
 You are the DECISION layer of a four-role cognitive agent. On every iteration
 you choose EXACTLY ONE of three actions:
 
@@ -936,11 +927,10 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
 [4] CALL_TOOL OK  :: call fetch_url({"url": "https://oneuptime.com/blog/post/2026-01-24-asyncio-concurrent-programming-python/view"})
        result: {"status": 200, "content_type": "text/html; charset=utf-8", "length_bytes": 15857, "text": "Skip to main content\nOneUptime\nOpen menu\nProducts\nEssentials\nMonitoring\nUptime & synthetic checks\nStatus Page\nCommunicate incidents to users\nIncidents\nDetect, manage & resolve\nOn-Call & Alerts\nSmart routing & escalations\nScheduled Maintenance\nPlan & communicate downtime\nObservability\nLogs\nFastest log ingest & search\nMetrics\nApplication & infra metrics\nTraces\nDistributed request tracing\nExceptions\nError tracking & debugging\nProfiles\nCPU & memory profiling\nInfrastructure\nKubernetes\nCluster & pod observability\nDocker\nHost & container observability\nHosts\nAuto-discovered server metrics\nAutomation & Analytics\nWorkflows\nNo-code automation builder\nRunbooks\nAuto-trigger response steps\nDashboards\nCustom data visualizations\nAI Agent\nAuto-fix issues with AI-powered PRs. Let AI analyze incidents and automatically create pull requests to resolve them.\nResources\nDocumentation\nAPI Reference\nGitHub\nBlog & Guides\nGet Started\nStart Free Trial\nRequest Demo\n[email protected]\nOpen Source \u2014 Self-host or use our cloud. Your data, your choice.\nView Pricing\nEnterprise\nEnterprise\nEnterprise\nBuilt for how you work\nScale your reliability operations with enterprise-grade tools.\nEnterprise Overview\nScale with confidence\nRequest Demo\nSee it in action\nContact Sales\nEnterprise\nEnterprise Overview\nSolutions for large organizations\nRequest Demo\nSchedule a personalized demo\nTeams\nDevOps\nSRE\nPlatform\nDevelopers\nIndustries\nFinTech\nSaaS\nHealthcare\nE-Commerce\nMedia\nGovernment\nDocumentation\nPricing\nBlog\nGet Started Free\nPricing\nResources\nResources\nLearn & Connect\nEverything you need to get started and succeed.\nDocumentation\nGuides & tutorials\nAPI Reference\nREST API & SDKs\nStar on GitHub\nLearn\nBlog\nNews & insights\nStatus\nSystem status\nChangelog\nWhat's new\nVideos\nWatch & learn\nSupport\nHelp Center\nContact Us\nCompany\nAbout Us\nMerch Store\nLegal\nPrivacy\nTerms\n100% Open Source\nSign\nin\nSign up\nClose menu\nStatus Page\nIncidents\nMonitoring\nOn-Call\nMaintenance\nLogs\nMetrics\nTraces\nExceptions\nKubernetes\nDocker\nHosts\nProfiles\nWorkflows\nDashboards\nAI Agent\nEnterprise\nDevOps\nSRE\nPlatform\nPricing\nDocs\nRequest Demo\nSupport\nSign\nup\nExisting customer?\nSign in\nHow to Use asyncio for Concurrent Programming in Python\nMaster Python's asyncio library for writing concurrent code. Learn async/await syntax, running tasks concurrently, and handling real-world scenarios like API calls and file I/O.\n@nawazdhandala\n\u2022\nJan 24, 2026\n\u2022\nReading time\nPython\nAsyncio\nConcurrency\nAsync/Await\nPerformance\nOn this page\nWhen your program spends time waiting for I/O operations like network requests or file reads, asyncio lets it do other work instead of sitting idle. This guide covers the fundamentals of asyncio and practical patterns for building efficient concurrent applications.\nAsyncio is Python's built-in library for writing concurrent code using the async/await syntax. It is particularly effective for I/O-bound operations where your program waits for external resources like databases, APIs, or file systems.\nUnderstanding Async vs Sync\nFirst, let us see why async matters:\nimport time\nimport asyncio\n# Synchronous version - total time: 3 seconds\ndef sync_fetch_data():\ntime.sleep(1) # Simulates network request\nreturn \"data\"\ndef sync_main():\nstart = time.time()\nresult1 = sync_fetch_data()\nresult2 = sync_fetch_data()\nresult3 = sync_fetch_data()\nprint(f\"Sync total time: {time.time() - start:.2f}s\")\n# Asynchronous version - total time: ~1 second\nasync def async_fetch_data():\nawait asyncio.sleep(1) # Non-blocking sleep\nreturn \"data\"\nasync def async_main():\nstart = time.time()\n# Run all three concurrently\nresults = await asyncio.gather(\nasync_fetch_data(),\nasync_fetch_data(),\nasync_fetch_data()\n)\nprint(f\"Async total time: {time.time() - start:.2f}s\")\n# Run both\nsync_main() # Sync total time: 3.00s\nasyncio.run(async_main()) # Async total time: 1.00s\nThe async version runs all three operations concurrently while waiting.\nBasic Async/Await Syntax\nDefining Async Functions\nimport asyncio\n# Define an async function with 'async def'\nasync def greet(name):\nprint(f\"Hello, {name}!\")\nawait asyncio.sleep(1) # Non-blocking wait\nprint(f\"Goodbye, {name}!\")\nreturn f\"Greeted {name}\"\n# Run an async function\nresult = asyncio.run(greet(\"Alice\"))\nprint(result)\nThe await Keyword\nawait can only be used inside async functions and suspends execution until the awaited coroutine completes:\nasync def fetch_user(user_id):\nawait asyncio.sleep(0.5) # Simulate API call\nreturn {\"id\": user_id, \"name\": f\"User {user_id}\"}\nasync def fetch_posts(user_id):\nawait asyncio.sleep(0.5) # Simulate API call\nreturn [{\"id\": 1, \"title\": \"Post 1\"}, {\"id\": 2, \"title\": \"Post 2\"}]\nasync def get_user_with_posts(user_id):\n# These run sequentially\nuser = await fetch_user(user_id)\nposts = await fetch_posts(user_id)\nuser[\"posts\"] = posts\nreturn user\n# Run it\nresult = asyncio.run(get_user_with_posts(123))\nprint(result)\nRunning Tasks Concurrently\nUsing asyncio.gather()\ngather() runs multiple coroutines concurrently and returns results in order:\nimport asyncio\nasync def fetch_url(url):\nprint(f\"Fetching {url}\")\nawait asyncio.sleep(1) # Simulate network delay\nreturn f\"Content from {url}\"\nasync def main():\nurls = [\n\"https://api.example.com/users\",\n\"https://api.example.com/posts\",\n\"https://api.example.com/comments\"\n]\n# Fetch all URLs concurrently\nresults = await asyncio.gather(*[fetch_url(url) for url in urls])\nfor url, result in zip(urls, results):\nprint(f\"{url}: {result}\")\nasyncio.run(main())\nUsing asyncio.create_task()\nCreate tasks to run in the background:\nasync def background_task():\nwhile True:\nprint(\"Background task running...\")\nawait asyn...
 
-```
 
 ### Per-Query JSON Schema sent to LLM (RawDecision_AsyncioBestPractices)
 
-```json
+json
 {
   "$defs": {
     "AsyncioBestPractices": {
@@ -1097,17 +1087,16 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
   "title": "RawDecision_AsyncioBestPractices",
   "type": "object"
 }
-```
 
 ### Raw LLM Response
 
-```json
+json
 {"action": "FINAL_ANSWER", "reasoning": "Top results agree on best practices", "answer": {"tips": ["Use asyncio.run() as the main entry point", "Prefer async context managers", "Always await coroutines", "Handle cancellation gracefully"], "pages_read": ["https://www.shanechang.com/p/python-asyncio-best-practices-pitfalls", "https://discuss.python.org/t/asyncio-best-practices/12576", "https://oneuptime.com/blog/post/2026-01-24-asyncio-concurrent-programming-python/view"], "sources": ["https://www.shanechang.com/p/python-asyncio-best-practices-pitfalls", "https://discuss.python.org/t/asyncio-best-practices/12576", "https://oneuptime.com/blog/post/2026-01-24-asyncio-concurrent-programming-python/view"]}}
-```
+
 
 ### Validated Decision (`FINAL_ANSWER`)
 
-```json
+json
 {
   "action": "FINAL_ANSWER",
   "reasoning": "Top results agree on best practices",
@@ -1130,11 +1119,11 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
     ]
   }
 }
-```
+
 
 ### Final-Answer Validation (AsyncioBestPractices)
 
-```json
+json
 {
   "tips": [
     "Use asyncio.run() as the main entry point",
@@ -1153,6 +1142,7 @@ the uncertainty in `reasoning`. A partial answer beats a timeout.
     "https://oneuptime.com/blog/post/2026-01-24-asyncio-concurrent-programming-python/view"
   ]
 }
+
 ```
 
 ## Architectural contracts
