@@ -149,13 +149,22 @@ explaining why you picked this action. Leave the unused fields out (or null).
   results, or canonical well-known URLs (Wikipedia, pypi.org, etc.).
 - Prefer authoritative sources: Wikipedia for biography, official docs for
   libraries, NVD/GitHub Security Advisories for CVEs.
-- For synthesis queries requiring multiple sources, fetch each source in
-  separate iterations before synthesizing.
+- SYNTHESIS WORKFLOW — when query_type="synthesis":
+    Step 1  Call web_search ONCE. You now have a list of URLs.
+    Step 2  Call fetch_url on each URL from Step 1, ONE per iteration.
+            Count successful fetch_url entries in the scratchpad. If
+            pages_read requires ≥3 entries and you have fewer than 3
+            successful fetch_url calls, pick the next unvisited URL from
+            Step 1's results and call fetch_url on it NOW.
+            DO NOT call web_search again — you already have the URLs.
+    Step 3  After ≥3 successful fetch_url calls, emit FINAL_ANSWER.
+- DUPLICATE-CALL GUARD — BEFORE choosing CALL_TOOL, read the scratchpad.
+  If a ⚠ DUPLICATE warning appears for a call, or if an identical
+  tool + args already has an "OK" entry, DO NOT repeat that call.
+  Choose fetch_url on an unvisited URL, or FINAL_ANSWER instead.
 - READ THE SCRATCHPAD. If a previous iteration shows your CALL_TOOL failed
   (ERR), look at the error and FIX what you missed — empty tool_args is the
   most common bug; fill in `query` or `url`.
-- Never repeat the exact same search query that already returned results.
-  Refine the terms if the previous results were not useful.
 - GROUNDING: Every field in your FINAL_ANSWER.answer (dates, names, URLs, lists)
   MUST appear verbatim somewhere in a prior iteration's `result:` excerpt in the
   scratchpad. If a value you need is NOT visible in the scratchpad, CALL_TOOL to
@@ -209,10 +218,25 @@ def _facts_block(facts: list[MemoryRecord]) -> str:
     )
 
 
+def _scratchpad_dedup_key(summary: str) -> str:
+    """Normalize a decision_summary to a dedup key.
+    Strips varying args (max_results) so same-query searches are recognised."""
+    import re
+    m = re.search(r'call web_search\(.*?"query":\s*"([^"]+)"', summary)
+    if m:
+        return f"web_search::{m.group(1).strip().lower()}"
+    m = re.search(r'call fetch_url\(.*?"url":\s*"([^"]+)"', summary)
+    if m:
+        return f"fetch_url::{m.group(1).strip()}"
+    return summary
+
+
 def _render_scratchpad(scratchpad: list[ScratchpadEntry]) -> str:
     if not scratchpad:
         return "(empty — this is iteration 1)"
     lines: list[str] = []
+    seen_ok: dict[str, int] = {}  # dedup_key -> first iteration that succeeded
+
     for s in scratchpad:
         status = "OK " if s.result_success else "ERR"
         lines.append(
@@ -220,6 +244,17 @@ def _render_scratchpad(scratchpad: list[ScratchpadEntry]) -> str:
         )
         if s.result_excerpt:
             lines.append(f"       result: {s.result_excerpt}")
+
+        if s.decision_action == "CALL_TOOL" and s.result_success:
+            key = _scratchpad_dedup_key(s.decision_summary)
+            if key in seen_ok:
+                lines.append(
+                    f"  ⚠ DUPLICATE — identical to iteration {seen_ok[key]}. "
+                    f"DO NOT call this tool with these args again."
+                )
+            else:
+                seen_ok[key] = s.iteration
+
     return "\n".join(lines)
 
 
@@ -351,11 +386,27 @@ def decide(
     return decision
 
 
+_ARGS_TO_TOOL: dict[str, str] = {
+    "url":      "fetch_url",
+    "query":    "web_search",
+    "timezone": "get_time",
+}
+
+
 def _to_typed_decision(raw: RawDecision) -> DecisionOutput:
     """Convert the flat LLM-wire shape into the discriminated-union branch."""
     if raw.action == "CALL_TOOL":
         if not raw.tool_name:
-            raise ValueError("CALL_TOOL decision requires `tool_name`.")
+            # Infer tool_name from the args the LLM did provide before giving up.
+            args = raw.tool_args or {}
+            inferred = next(
+                (_ARGS_TO_TOOL[k] for k in _ARGS_TO_TOOL if args.get(k)),
+                None,
+            )
+            if inferred:
+                raw = raw.model_copy(update={"tool_name": inferred})
+            else:
+                raise ValueError("CALL_TOOL decision requires `tool_name`.")
         args = raw.tool_args or {}
         required: dict[str, list[str]] = {
             "web_search": ["query"],

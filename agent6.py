@@ -70,6 +70,21 @@ TRACE_RESULT_CHARS = 400
 #  Rendering helpers
 # ════════════════════════════════════════════════════════════════════════════
 
+def _call_dedup_key(decision: DecisionOutput) -> str | None:
+    """Return a dedup key for CALL_TOOL decisions; None for other actions.
+    Uses only the semantically meaningful arg so that e.g. max_results
+    differences don't prevent duplicate detection."""
+    if not isinstance(decision, CallToolDecision):
+        return None
+    if decision.tool_name == "web_search":
+        q = decision.tool_args.get("query", "").strip().lower()
+        return f"web_search::{q}"
+    if decision.tool_name == "fetch_url":
+        u = decision.tool_args.get("url", "").strip()
+        return f"fetch_url::{u}"
+    return None
+
+
 def _summarize_decision(decision: DecisionOutput) -> str:
     if isinstance(decision, CallToolDecision):
         args = json.dumps(decision.tool_args, sort_keys=True, default=str)
@@ -166,6 +181,7 @@ async def run_agent(query: str, max_iters: int = DEFAULT_MAX_ITERS) -> int:
     # 3. + 4. Open MCP and run the loop.
     decide_failures = 0
     DECIDE_FAILURE_LIMIT = 3
+    successful_calls: set[str] = set()  # dedup keys of already-succeeded CALL_TOOLs
     print("[mcp]      starting subprocess…", flush=True)
     async with MCPClient() as mcp:
         print("[mcp]      subprocess ready", flush=True)
@@ -200,12 +216,47 @@ async def run_agent(query: str, max_iters: int = DEFAULT_MAX_ITERS) -> int:
                     return 1
                 continue
 
-            print(
-                f"[execute]  → {decision.action} :: {_summarize_decision(decision)[:160]}",
-                flush=True,
-            )
-            result = await execute(decision, mcp=mcp, store=store)
-            print(f"[execute]  ← {'OK' if result.success else 'ERROR'}", flush=True)
+            # Dedup guard: block repeated identical CALL_TOOL calls.
+            dup_key = _call_dedup_key(decision)
+            if dup_key and dup_key in successful_calls:
+                tool_name = decision.tool_name if isinstance(decision, CallToolDecision) else "?"
+                key_arg = "query" if tool_name == "web_search" else "url"
+                # Next unvisited URL hint for synthesis loops
+                if tool_name == "web_search":
+                    next_hint = (
+                        "Call fetch_url on the next unvisited URL from the "
+                        "web_search results already in the scratchpad."
+                    )
+                else:
+                    next_hint = (
+                        "If the scratchpad contains enough data to fill every "
+                        "field in the answer schema, emit FINAL_ANSWER now. "
+                        "Otherwise call fetch_url on a different unvisited URL."
+                    )
+                block_msg = (
+                    f"DUPLICATE BLOCKED: '{tool_name}' with this {key_arg} already "
+                    f"succeeded — do not repeat it. {next_hint}"
+                )
+                print(
+                    f"[execute]  → BLOCKED DUPLICATE :: {_summarize_decision(decision)[:120]}",
+                    flush=True,
+                )
+                result = ActionResult(
+                    action_type="CALL_TOOL",
+                    success=False,
+                    error=block_msg,
+                )
+                print("[execute]  ← BLOCKED", flush=True)
+            else:
+                print(
+                    f"[execute]  → {decision.action} :: {_summarize_decision(decision)[:160]}",
+                    flush=True,
+                )
+                result = await execute(decision, mcp=mcp, store=store)
+                print(f"[execute]  ← {'OK' if result.success else 'ERROR'}", flush=True)
+                if result.success and dup_key:
+                    successful_calls.add(dup_key)
+
             _print_iteration(i, decision, result)
 
             state.scratchpad.append(

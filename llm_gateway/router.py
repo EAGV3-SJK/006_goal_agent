@@ -163,7 +163,7 @@ class Router:
 # with worker quotas (provider keys are shared but providers meter per-model).
 # -----------------------------------------------------------------------------
 
-DEFAULT_ROUTER_ORDER = ["cerebras", "groq", "nvidia", "github"]
+DEFAULT_ROUTER_ORDER = ["cerebras", "groq", "nvidia", "github", "anthropic"]
 
 
 class RouterPool:

@@ -122,6 +122,18 @@ class AsyncioBestPractices(BaseModel):
         description="Numbered list of agreed best practices (at least 3).",
         min_length=3,
     )
+    pages_read: list[str] = Field(
+        ...,
+        description=(
+            "URLs of pages fully fetched via the fetch_url tool during this run. "
+            "Workflow: (1) web_search returns candidate URLs, "
+            "(2) call fetch_url on each candidate — one per iteration, "
+            "(3) record each fetched URL here. "
+            "Each entry must match the `url` arg of a successful fetch_url call "
+            "in the scratchpad. Requires at least 3 fetch_url successes."
+        ),
+        min_length=3,
+    )
     sources: list[str] = Field(default_factory=list, description="URLs consulted.", min_length=1)
 
 

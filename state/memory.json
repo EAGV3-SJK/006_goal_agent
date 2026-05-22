@@ -4,13 +4,9 @@
       "id": "moms_birthday",
       "kind": "fact",
       "content": {
-        "date": "15 May 2026",
-        "reminders": [
-          "two weeks before",
-          "on the day"
-        ]
+        "date": "15 May 2026"
       },
-      "created_at": "2026-05-22T21:09:24.507964Z",
+      "created_at": "2026-05-22T22:05:42.156046Z",
       "source": "agent_inference"
     }
   ],

@@ -291,6 +291,42 @@ This means static pages (Wikipedia, Python docs, discuss.python.org, PyPI) are f
 
 ---
 
+## Phase 8 — Query D Schema Fix and Loop Robustness
+
+### Root cause: schema underspecification (Query D early convergence)
+
+Query D (`AsyncioBestPractices`) converged in 2 iterations instead of the expected ~5. After a single `web_search` call, the LLM could ground both `tips` (from search snippets) and `sources` (from search result URLs), satisfying the commit rule without fetching any full pages.
+
+**Fix — `pages_read` field (Option 1 of two identified):**
+
+Added `pages_read: list[str]` (`min_length=3`) to `AsyncioBestPractices` in `schema.py`. Field description specifies a 3-step workflow: (1) get URLs from `web_search`, (2) call `fetch_url` on each, (3) record the fetched URLs here. This field can only be grounded from `fetch_url` scratchpad entries, forcing at least 3 `fetch_url` iterations before the commit rule can fire.
+
+### Secondary bug: repeated web_search loop after 2 fetch_url calls
+
+After the schema fix, a new failure appeared: after 2 successful `fetch_url` calls the LLM fell into a loop repeating the same `web_search` query on iterations 5–10, hitting the cap.
+
+**Three-layer fix:**
+
+| Layer | Change |
+|---|---|
+| `schema.py` | Rewrote `pages_read` description with explicit 3-step workflow; removed the ambiguous "Do NOT populate from web_search snippet URLs" phrase |
+| `decision.py` | Replaced vague "fetch multiple sources" bullet with an explicit **SYNTHESIS WORKFLOW** (search once → fetch each URL → FINAL_ANSWER after ≥ 3 fetch_url calls). Added **DUPLICATE-CALL GUARD** heuristic. Added `_scratchpad_dedup_key()` helper; `_render_scratchpad()` now appends `⚠ DUPLICATE — identical to iteration N` after any repeated OK CALL_TOOL entry |
+| `agent6.py` | Added `_call_dedup_key()` (keys `web_search` by query, `fetch_url` by URL) and `successful_calls: set[str]`. When a repeated call is attempted, guard blocks `execute()` and injects a `DUPLICATE BLOCKED` ERR entry with explicit recovery instruction: "call fetch_url on the next unvisited URL, or emit FINAL_ANSWER if ≥ 3 fetch_url entries exist" |
+
+### `router.py` — anthropic added to fallback ring
+
+`DEFAULT_ROUTER_ORDER` in `llm_gateway/router.py` extended with `"anthropic"` as the last fallback provider for router LLM calls.
+
+### Result of third run (current state)
+
+The dedup guard correctly blocks repeated `web_search` calls (iterations 4–9 each show `DUPLICATE BLOCKED`). The near-cap rule at iteration 9 fires, and iteration 10 emits `FINAL_ANSWER` — the run exits 0 and the answer validates as `AsyncioBestPractices`.
+
+**Remaining weakness:** the LLM does not pivot from "blocked web_search" to "fetch the 3rd unvisited URL". It keeps choosing `web_search` until the near-cap forces `FINAL_ANSWER`. The 3rd entry in `pages_read` (`shanechang.com`) is taken from the search result snippets — it was never actually fetched — violating the grounding rule. The run succeeds but for the wrong reason.
+
+**Next step:** inject the 3rd unvisited URL explicitly into the scratchpad error message (`DUPLICATE BLOCKED: fetch 'https://...' next`) so the LLM has an immediately actionable URL to pick.
+
+---
+
 ## Files Superseded (kept for reference)
 
 | File | Superseded by |
@@ -305,9 +341,8 @@ This means static pages (Wikipedia, Python docs, discuss.python.org, PyPI) are f
 
 All six core modules (`schema.py`, `memory.py`, `perception.py`, `decision.py`, `action.py`, `agent6.py`) import cleanly under `uv run python`. The architecture fully complies with the assignment's Pydantic contract requirement and `uv` execution requirement.
 
-`fetch_url` is fixed: httpx-first with crawl4ai fallback, `truststore` injected for Windows system CA trust.
+Queries A, B, C1, C2 converge correctly. Query D exits 0 and validates, but uses the near-cap escape rather than proactively fetching the 3rd source — a grounding weakness.
 
 **Pending:**
-- Run Queries A, B, C1/C2, D with gateway live and capture terminal output for README
-- Incorporate medium-priority items: `AgentState` per-query `max_iters` tuning, `pop_decision_prompt.md`, test files
+- Strengthen the Query D recovery path: when a `web_search` duplicate is blocked, surface the specific next unvisited URL in the error message so Decision has a concrete `fetch_url` target
 - Record YouTube demo
