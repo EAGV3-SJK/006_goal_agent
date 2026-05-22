@@ -1,0 +1,795 @@
+[
+    {
+        "id": "mem:5d4bc3e93b21",
+        "kind": "fact",
+        "keywords": [
+            "mom",
+            "birthday",
+            "15 may 2026",
+            "reminder",
+            "two weeks before"
+        ],
+        "descriptor": "Mom's birthday: 15 May 2026",
+        "value": {
+            "event": "mom's birthday",
+            "date": "2026-05-15",
+            "reminders": [
+                {
+                    "offset": "2 weeks before"
+                },
+                {
+                    "offset": "0 days"
+                }
+            ]
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "1f09d741",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:33:07.983293Z"
+    },
+    {
+        "id": "mem:7757c5a5bfb2",
+        "kind": "tool_outcome",
+        "keywords": [
+            "uid",
+            "publish",
+            "path",
+            "reminder",
+            "dtstart",
+            "calscale",
+            "version",
+            "valarm",
+            "20260101t000000z",
+            "weeks",
+            "15",
+            "content",
+            "confirmed",
+            "priority",
+            "display",
+            "transparent",
+            "create",
+            "summary",
+            "plan",
+            "card",
+            "en",
+            "gregorian",
+            "begin",
+            "assistant",
+            "2026",
+            "2",
+            "end",
+            "reminders",
+            "calendar",
+            "method",
+            "description",
+            "transp",
+            "categories",
+            "may",
+            "away",
+            "heads",
+            "time",
+            "20260501t090000z",
+            "2week",
+            "vcalendar",
+            "prodid",
+            "trigger",
+            "file",
+            "ntime",
+            "value",
+            "status",
+            "dtstamp",
+            "gift",
+            "ai",
+            "action",
+            "20260501",
+            "birthday",
+            "celebration",
+            "date",
+            "headsup",
+            "dtend",
+            "20260502",
+            "1",
+            "mom",
+            "vevent",
+            "ics",
+            "0"
+        ],
+        "descriptor": "create_file(path=reminders/mom_birthday_2week_hea...)",
+        "value": {
+            "tool_name": "create_file",
+            "arguments": {
+                "path": "reminders/mom_birthday_2week_headsup.ics",
+                "content": "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//AI Assistant//Calendar Reminder//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\n\nBEGIN:VEVENT\nUID:mom-birthday-2week-reminder-20260501@assistant\nDTSTAMP:20260101T000000Z\nDTSTART;VALUE=DATE:20260501\nDTEND;VALUE=DATE:20260502\nSUMMARY:🎂 Mom's Birthday in 2 Weeks!\nDESCRIPTION:Heads-up: Mom's birthday is on 15 May 2026 — just 2 weeks away!\\nTime to plan a gift\\, card\\, or celebration.\nCATEGORIES:BIRTHDAY,REMINDER\nPRIORITY:1\nSTATUS:CONFIRMED\nTRANSP:TRANSPARENT\nBEGIN:VALARM\nTRIGGER;VALUE=DATE-TIME:20260501T090000Z\nACTION:DISPLAY\nDESCRIPTION:Reminder: Mom's Birthday is in 2 weeks (15 May 2026)!\nEND:VALARM\nEND:VEVENT\n\nEND:VCALENDAR\n"
+            },
+            "result_preview": "{\n  \"ok\": true,\n  \"path\": \"reminders/mom_birthday_2week_headsup.ics\",\n  \"size_bytes\": 689\n}"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "1f09d741",
+        "goal_id": "goal_3",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:34:01.360152Z"
+    },
+    {
+        "id": "mem:9d88e31399c2",
+        "kind": "tool_outcome",
+        "keywords": [
+            "uid",
+            "prodid",
+            "publish",
+            "path",
+            "reminder",
+            "dtstart",
+            "trigger",
+            "file",
+            "calscale",
+            "version",
+            "valarm",
+            "content",
+            "today",
+            "20260516",
+            "confirmed",
+            "may15",
+            "value",
+            "time",
+            "20260515",
+            "status",
+            "wish",
+            "dtstamp",
+            "display",
+            "transparent",
+            "create",
+            "summary",
+            "forget",
+            "ai",
+            "action",
+            "happy",
+            "en",
+            "gregorian",
+            "begin",
+            "birthday",
+            "assistant",
+            "celebrate",
+            "2026",
+            "2",
+            "end",
+            "reminders",
+            "20260515t000000z",
+            "calendar",
+            "date",
+            "method",
+            "dtend",
+            "pt9h",
+            "mom",
+            "description",
+            "vevent",
+            "transp",
+            "ics",
+            "vcalendar",
+            "0"
+        ],
+        "descriptor": "create_file(path=reminders/mom_birthday_may15_202...)",
+        "value": {
+            "tool_name": "create_file",
+            "arguments": {
+                "path": "reminders/mom_birthday_may15_2026.ics",
+                "content": "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//AI Assistant//Calendar Reminder//EN\nCALSCALE:GREGORIAN\nMETHOD:PUBLISH\n\nBEGIN:VEVENT\nUID:mom-birthday-may15-2026@ai-assistant\nSUMMARY:🎂 Mom's Birthday!\nDESCRIPTION:Today is Mom's Birthday! Don't forget to wish her a Happy Birthday! 🎉🎈\nDTSTART;VALUE=DATE:20260515\nDTEND;VALUE=DATE:20260516\nDTSTAMP:20260515T000000Z\nSTATUS:CONFIRMED\nTRANSP:TRANSPARENT\nBEGIN:VALARM\nTRIGGER:-PT9H\nACTION:DISPLAY\nDESCRIPTION:🎂 Today is Mom's Birthday! Time to celebrate! 🎉\nEND:VALARM\nEND:VEVENT\n\nEND:VCALENDAR\n"
+            },
+            "result_preview": "{\n  \"ok\": true,\n  \"path\": \"reminders/mom_birthday_may15_2026.ics\",\n  \"size_bytes\": 564\n}"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "1f09d741",
+        "goal_id": "goal_4",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:34:18.084664Z"
+    },
+    {
+        "id": "mem:30990916d5f3",
+        "kind": "fact",
+        "keywords": [
+            "when",
+            "is",
+            "mom",
+            "birthday"
+        ],
+        "descriptor": "Query about mother's birthday date",
+        "value": {
+            "question": "When is mom's birthday?"
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "34228911",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:35:29.609580Z"
+    },
+    {
+        "id": "mem:5212f77d8516",
+        "kind": "fact",
+        "keywords": [
+            "fetch",
+            "https",
+            "en",
+            "wikipedia",
+            "org",
+            "wiki",
+            "claude",
+            "shannon",
+            "tell",
+            "me",
+            "his",
+            "birth",
+            "date",
+            "death",
+            "date",
+            "and",
+            "three",
+            "key",
+            "contributions",
+            "to",
+            "information",
+            "theory"
+        ],
+        "descriptor": "Claude Shannon birth date, death date, and three key contributions to information theory",
+        "value": {
+            "url": "https://en.wikipedia.org/wiki/Claude_Shannon",
+            "birth_date": null,
+            "death_date": null,
+            "contributions": [
+                null,
+                null,
+                null
+            ]
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "2be39932",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:36:45.470080Z"
+    },
+    {
+        "id": "mem:1e0949655306",
+        "kind": "tool_outcome",
+        "keywords": [
+            "url",
+            "wikipedia",
+            "fetch",
+            "https",
+            "shannon",
+            "claude",
+            "en",
+            "wiki",
+            "org"
+        ],
+        "descriptor": "fetch_url(url=https://en.wikipedia.org/wiki/Cla...) -> artifact art:2d8706b67907",
+        "value": {
+            "tool_name": "fetch_url",
+            "arguments": {
+                "url": "https://en.wikipedia.org/wiki/Claude_Shannon"
+            },
+            "result_preview": "[artifact art:2d8706b67907] Error executing tool fetch_url: 'charmap' codec can't encode character '\\u2192' in position 2: character maps to <undefined>"
+        },
+        "artifact_id": "art:2d8706b67907",
+        "source": "action",
+        "run_id": "2be39932",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:37:03.483730Z"
+    },
+    {
+        "id": "mem:6106986e549b",
+        "kind": "tool_outcome",
+        "keywords": [
+            "biography",
+            "information",
+            "birth",
+            "web",
+            "query",
+            "wikipedia",
+            "contributions",
+            "shannon",
+            "date",
+            "theory",
+            "claude",
+            "death",
+            "search"
+        ],
+        "descriptor": "web_search(query=Claude Shannon Wikipedia biogra...)",
+        "value": {
+            "tool_name": "web_search",
+            "arguments": {
+                "query": "Claude Shannon Wikipedia biography birth death date information theory contributions"
+            },
+            "result_preview": "{\n  \"title\": \"Claude Shannon - Wikipedia\",\n  \"url\": \"https://en.wikipedia.org/wiki/Claude_Shannon\",\n  \"snippet\": \"Claude Elwood Shannon was an American polymath who was a mathematician, electrical engineer, computer scientist, cryptographer, and inventor known as the \\\"father of information theory\\\""
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "2be39932",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:37:26.909739Z"
+    },
+    {
+        "id": "mem:8535976d1f80",
+        "kind": "fact",
+        "keywords": [
+            "claude shannon",
+            "information theory",
+            "birth date",
+            "death date"
+        ],
+        "descriptor": "Claude Shannon's biography and key contributions",
+        "value": {
+            "name": "Claude Shannon",
+            "birth_date": "April 30, 1916",
+            "death_date": "February 24, 2001",
+            "contributions": [
+                "developing the concept of the bit as a unit of information",
+                "establishing the field of information theory",
+                "proposing the noisy-channel coding theorem"
+            ]
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "b67a5ade",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:41:31.217930Z"
+    },
+    {
+        "id": "mem:69eb5de85e5d",
+        "kind": "tool_outcome",
+        "keywords": [
+            "wiki",
+            "org",
+            "https",
+            "url",
+            "wikipedia",
+            "shannon",
+            "en",
+            "fetch",
+            "claude",
+            "m"
+        ],
+        "descriptor": "fetch_url(url=https://en.m.wikipedia.org/wiki/C...) -> artifact art:e3b0c44298fc",
+        "value": {
+            "tool_name": "fetch_url",
+            "arguments": {
+                "url": "https://en.m.wikipedia.org/wiki/Claude_Shannon"
+            },
+            "result_preview": "[artifact art:e3b0c44298fc] {\n  \"status\": 200,\n  \"content_type\": \"text/markdown\",\n  \"length_bytes\": 0,\n  \"text\": \"\"\n}"
+        },
+        "artifact_id": "art:e3b0c44298fc",
+        "source": "action",
+        "run_id": "b67a5ade",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T18:42:58.346243Z"
+    },
+    {
+        "id": "mem:420969c09e96",
+        "kind": "scratchpad",
+        "keywords": [
+            "fetch",
+            "https",
+            "en.wikipedia.org",
+            "claude_shannon",
+            "birth",
+            "date",
+            "death",
+            "date",
+            "three",
+            "key",
+            "contributions",
+            "information",
+            "theory"
+        ],
+        "descriptor": "Request for Claude Shannon's birth/death dates and three information theory contributions",
+        "value": {
+            "entity": "Claude Shannon",
+            "birth_date": null,
+            "death_date": null,
+            "key_contributions": []
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "a9f5c806",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T19:09:57.184335Z"
+    },
+    {
+        "id": "mem:0d59fe38e19f",
+        "kind": "tool_outcome",
+        "keywords": [
+            "wiki",
+            "en",
+            "wikipedia",
+            "https",
+            "fetch",
+            "url",
+            "org",
+            "shannon",
+            "claude"
+        ],
+        "descriptor": "fetch_url(url=https://en.wikipedia.org/wiki/Cla...)",
+        "value": {
+            "tool_name": "fetch_url",
+            "arguments": {
+                "url": "https://en.wikipedia.org/wiki/Claude_Shannon"
+            },
+            "result_preview": "[tool-error] fetch_url: Connection closed"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "a9f5c806",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:12:45.194341Z"
+    },
+    {
+        "id": "mem:df5598fd6b8e",
+        "kind": "fact",
+        "keywords": [
+            "claud shannon",
+            "birth date",
+            "death date",
+            "information theory",
+            "contributions"
+        ],
+        "descriptor": "Information retrieval query for Claude Shannon's biography and academic contributions.",
+        "value": {
+            "action": "fetch_wikipedia",
+            "url": "https://en.wikipedia.org/wiki/Claude_Shannon",
+            "data_points": [
+                "birth date",
+                "death date",
+                "three key contributions to information theory"
+            ]
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "12d187f5",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:14:29.465697Z"
+    },
+    {
+        "id": "mem:1194cab172d8",
+        "kind": "tool_outcome",
+        "keywords": [
+            "wikipedia",
+            "claude",
+            "org",
+            "wiki",
+            "fetch",
+            "shannon",
+            "https",
+            "en",
+            "url"
+        ],
+        "descriptor": "fetch_url(url=https://en.wikipedia.org/wiki/Cla...) -> artifact art:783a9afe9bb6",
+        "value": {
+            "tool_name": "fetch_url",
+            "arguments": {
+                "url": "https://en.wikipedia.org/wiki/Claude_Shannon"
+            },
+            "result_preview": "[artifact art:783a9afe9bb6] {\n  \"status\": 200,\n  \"content_type\": \"text/markdown\",\n  \"length_bytes\": 254211,\n  \"text\": \"[Jump to content](https://en.wikipedia.org/wiki/Claude_Shannon#bodyContent)\\nMain menu\\nMain menu\\nmove to sidebar hide\\nNavigation \\n  * [Main page](https://en.wikipedia.org/wiki/Main_Page \\\"Visit the main pa"
+        },
+        "artifact_id": "art:783a9afe9bb6",
+        "source": "action",
+        "run_id": "12d187f5",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:14:46.924699Z"
+    },
+    {
+        "id": "mem:b5e6617be50b",
+        "kind": "fact",
+        "keywords": [
+            "claude shannon",
+            "birth date",
+            "death date",
+            "information theory"
+        ],
+        "descriptor": "Information about Claude Shannon's life dates and major contributions.",
+        "value": {
+            "name": "Claude Shannon",
+            "details_requested": [
+                "birth date",
+                "death date",
+                "three key contributions to information theory"
+            ],
+            "source": "Wikipedia"
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "0333126d",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:17:03.591632Z"
+    },
+    {
+        "id": "mem:eba95a255068",
+        "kind": "scratchpad",
+        "keywords": [
+            "tokyo",
+            "family-friendly",
+            "things to do",
+            "weekend",
+            "weather forecast"
+        ],
+        "descriptor": "A request for family activities in Tokyo, filtered by the weekend's weather.",
+        "value": {
+            "location": "Tokyo",
+            "timeframe": "this weekend",
+            "activity_type": "family-friendly things to do",
+            "constraints": [
+                "3 items needed",
+                "must consider Saturday's weather forecast",
+                "select the most appropriate option"
+            ]
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "07ef1d45",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:17:44.817767Z"
+    },
+    {
+        "id": "mem:b83e9004e4ed",
+        "kind": "tool_outcome",
+        "keywords": [
+            "time",
+            "asia",
+            "tokyo",
+            "get",
+            "timezone"
+        ],
+        "descriptor": "get_time(timezone=Asia/Tokyo)",
+        "value": {
+            "tool_name": "get_time",
+            "arguments": {
+                "timezone": "Asia/Tokyo"
+            },
+            "result_preview": "{\n  \"iso\": \"2026-05-23T05:17:59.749581+09:00\",\n  \"human\": \"Saturday, 23 May 2026 05:17:59 JST\",\n  \"timezone\": \"Asia/Tokyo\",\n  \"offset_hours\": 9.0\n}"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "07ef1d45",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:17:59.752298Z"
+    },
+    {
+        "id": "mem:2420fb06ed70",
+        "kind": "tool_outcome",
+        "keywords": [
+            "2026",
+            "query",
+            "weekend",
+            "3",
+            "things",
+            "tokyo",
+            "family",
+            "web",
+            "search",
+            "may",
+            "friendly",
+            "max",
+            "results"
+        ],
+        "descriptor": "web_search(max_results=3, query=family-friendly ...)",
+        "value": {
+            "tool_name": "web_search",
+            "arguments": {
+                "max_results": 3,
+                "query": "family-friendly things to do in Tokyo this weekend May 2026"
+            },
+            "result_preview": "{\n  \"title\": \"The best Tokyo Family-friendly activities 2026 - Free cancellation\",\n  \"url\": \"https://www.getyourguide.com/tokyo-l193/family-friendly-activities-tc1094\",\n  \"snippet\": \"From £240 £228per group up to 6image\\n\\nTop rated\\n\\nTokyo: Family Sumo Workshop & Live Wrestling Show with Lunch2 ho"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "07ef1d45",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:18:16.452299Z"
+    },
+    {
+        "id": "mem:36778d9cfaa0",
+        "kind": "tool_outcome",
+        "keywords": [
+            "tc1094",
+            "url",
+            "getyourguide",
+            "www",
+            "tokyo",
+            "30",
+            "family",
+            "activities",
+            "https",
+            "friendly",
+            "l193",
+            "com",
+            "timeout",
+            "fetch"
+        ],
+        "descriptor": "fetch_url(timeout=30, url=https://www.getyourgu...) -> artifact art:12a2f6c0ee71",
+        "value": {
+            "tool_name": "fetch_url",
+            "arguments": {
+                "timeout": 30,
+                "url": "https://www.getyourguide.com/tokyo-l193/family-friendly-activities-tc1094"
+            },
+            "result_preview": "[artifact art:12a2f6c0ee71] {\n  \"status\": 302,\n  \"content_type\": \"text/markdown\",\n  \"length_bytes\": 20166,\n  \"text\": \"[Skip to main content](https://www.getyourguide.com/#main-content-wrapper)\\n[![Get Your Guide logo](data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22774%22%20height%3D"
+        },
+        "artifact_id": "art:12a2f6c0ee71",
+        "source": "action",
+        "run_id": "07ef1d45",
+        "goal_id": "goal_1",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:18:33.808821Z"
+    },
+    {
+        "id": "mem:7d798f410fb8",
+        "kind": "tool_outcome",
+        "keywords": [
+            "2026",
+            "query",
+            "tokyo",
+            "web",
+            "search",
+            "forecast",
+            "may",
+            "weather",
+            "saturday",
+            "23"
+        ],
+        "descriptor": "web_search(query=Tokyo weather forecast Saturday...)",
+        "value": {
+            "tool_name": "web_search",
+            "arguments": {
+                "query": "Tokyo weather forecast Saturday May 23 2026"
+            },
+            "result_preview": "{\n  \"title\": \"Weather Tokyo in May 2026: Temperature & Climate\",\n  \"url\": \"https://en.climate-data.org/asia/japan/tokyo/tokyo-3292/t/may-5\",\n  \"snippet\": \"| 23. May | 19 °C | 65 °F | 22 °C | 72 °F | 15 °C | 60 °F | 19 °C | 66 °F | 8.3 mm | 0.3 inch. |\\n| 24. May | 19 °C | 67 °F | 23 °C | 73 °F | 16 "
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "07ef1d45",
+        "goal_id": "goal_2",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:19:13.714075Z"
+    },
+    {
+        "id": "mem:88cd7ea1ff52",
+        "kind": "tool_outcome",
+        "keywords": [
+            "climate",
+            "5",
+            "asia",
+            "url",
+            "3292",
+            "20",
+            "tokyo",
+            "data",
+            "https",
+            "may",
+            "japan",
+            "en",
+            "org",
+            "timeout",
+            "fetch"
+        ],
+        "descriptor": "fetch_url(url=https://en.climate-data.org/asia/...) -> artifact art:7b601f365568",
+        "value": {
+            "tool_name": "fetch_url",
+            "arguments": {
+                "url": "https://en.climate-data.org/asia/japan/tokyo/tokyo-3292/t/may-5",
+                "timeout": 20
+            },
+            "result_preview": "[artifact art:7b601f365568] {\n  \"status\": 301,\n  \"content_type\": \"text/markdown\",\n  \"length_bytes\": 40395,\n  \"text\": \"##  [](https://en.climate-data.org/)\\n##  [](https://en.climate-data.org/)\\n  * [North America and Oceania](https://en.climate-data.org/north-america/)\\n    * [Australia](https://en.climate-data.org/oceania/aus"
+        },
+        "artifact_id": "art:7b601f365568",
+        "source": "action",
+        "run_id": "07ef1d45",
+        "goal_id": "goal_2",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:19:29.821684Z"
+    },
+    {
+        "id": "mem:6ac11aae5180",
+        "kind": "tool_outcome",
+        "keywords": [
+            "2026",
+            "query",
+            "max",
+            "3",
+            "tokyo",
+            "web",
+            "search",
+            "forecast",
+            "today",
+            "may",
+            "results",
+            "weather",
+            "saturday",
+            "23"
+        ],
+        "descriptor": "web_search(query=Tokyo weather forecast today Sa...)",
+        "value": {
+            "tool_name": "web_search",
+            "arguments": {
+                "query": "Tokyo weather forecast today Saturday May 23 2026",
+                "max_results": 3
+            },
+            "result_preview": "{\n  \"title\": \"Tokyo, Tokyo, Japan Monthly Weather | AccuWeather\",\n  \"url\": \"https://www.accuweather.com/en/jp/tokyo/226396/may-weather/226396\",\n  \"snippet\": \"# Tokyo, Tokyo\\n\\n## Around the Globe\\n\\nAround the Globe\\n\\n### Hurricane Tracker\\n\\n### Severe Weather\\n\\n### Radar & Maps\\n\\n### News & Fea"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "07ef1d45",
+        "goal_id": "goal_2",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:19:47.885054Z"
+    },
+    {
+        "id": "mem:3cf741a76971",
+        "kind": "fact",
+        "keywords": [
+            "mom",
+            "birthday",
+            "may 15, 2026",
+            "anniversary"
+        ],
+        "descriptor": "Mother's birthday is scheduled for May 15, 2026.",
+        "value": {
+            "event_type": "birthday",
+            "person": "mom",
+            "date": "2026-05-15",
+            "reminders": [
+                {
+                    "trigger": "two weeks before",
+                    "date": "2026-05-01"
+                },
+                {
+                    "trigger": "on the day",
+                    "date": "2026-05-15"
+                }
+            ]
+        },
+        "artifact_id": null,
+        "source": "user_query",
+        "run_id": "4e3a82ea",
+        "goal_id": null,
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:21:17.095035Z"
+    },
+    {
+        "id": "mem:dfccbc1c3a12",
+        "kind": "tool_outcome",
+        "keywords": [
+            "reminders",
+            "dir",
+            "path",
+            "list"
+        ],
+        "descriptor": "list_dir(path=reminders)",
+        "value": {
+            "tool_name": "list_dir",
+            "arguments": {
+                "path": "reminders"
+            },
+            "result_preview": "{\n  \"name\": \"mom_birthday_2week_headsup.ics\",\n  \"type\": \"file\",\n  \"size_bytes\": 689\n}\n{\n  \"name\": \"mom_birthday_may15_2026.ics\",\n  \"type\": \"file\",\n  \"size_bytes\": 564\n}"
+        },
+        "artifact_id": null,
+        "source": "action",
+        "run_id": "4e3a82ea",
+        "goal_id": "goal_3",
+        "confidence": 1.0,
+        "created_at": "2026-05-22T20:25:23.748303Z"
+    }
+]

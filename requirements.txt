@@ -1,0 +1,11 @@
+pydantic>=2.0.0
+google-generativeai>=0.8.0
+fastapi>=0.110
+uvicorn[standard]>=0.27
+httpx>=0.27
+python-dotenv>=1.0
+pydantic>=2.6
+jsonschema>=4.21
+ddgs
+crawl4ai
+tavily-python
